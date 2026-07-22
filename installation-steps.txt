@@ -2,32 +2,48 @@ Installation Steps for JavaScript and Visual studio code
 
 Install Node.js (Required for JavaScript practice) 
 Step 1: Download 
-1. Open: https://nodejs.org/en/download
-2. Download LTS version (recommended for beginners) 
-Step 2: Install 
-• Windows: 
+-------------------
+Go to the official download page:  https://nodejs.org/en/download
+Download the LTS (Long-Term Support) version. This is the recommended version for most users because it is stable and receives long-term updates.
+
+Step 2: Install  Node.js:
+----------------------------
+Windows: Run the downloaded .msi installer, accept the license agreement, keep the default installation options, and complete the setup.
+
+macOS: Open the downloaded .pkg installer and follow the installation wizard.
+
+Linux: You can either install using your distribution's package manager or, preferably, use a version manager such as nvm. The official Node.js site provides installation instructions for different distributions.
+
 Double-click .msi → Next → Accept → Install → Finish 
+
 Step 3: Verify Installation 
-Open Command Prompt / Terminal: 
-node -v 
+------------------------------
+Open Command Prompt / Terminal: node -v 
+
 Install Visual Studio Code (VS Code) 
+----------------------------------------
 Step 1: Download 
 1. Open: https://code.visualstudio.com 
 2. Download for your OS 
+
 Step 2: Install 
+------------------
 • Windows: 
 Run installer →   
 Check “Add to PATH” → Install 
+
 Set Up VS Code for JavaScript Practice 
+-----------------------------------------
 Step 1: Open VS Code 
 • Open VS Code 
 • Click File → Open Folder 
 • Create a folder: javascript-practice 
+
 Step 2: Create First JS File 
 1. Click New File 
-2. Name it: app.js 
+2. Name it: day1.js 
 3. Add: 
 console.log("JavaScript is ready!"); 
 4. Open Terminal – new terminal :  
-node app.js  
+    node app.js  
 give command to run file 
