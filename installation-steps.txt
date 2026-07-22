@@ -2,7 +2,7 @@ Installation Steps for JavaScript and Visual studio code
 
 Install Node.js (Required for JavaScript practice) 
 Step 1: Download 
-1. Open: https://nodejs.org 
+1. Open: https://nodejs.org/en/download
 2. Download LTS version (recommended for beginners) 
 Step 2: Install 
 • Windows: 
