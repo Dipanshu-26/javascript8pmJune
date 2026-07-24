@@ -75,3 +75,5 @@ console.log(typeof(x))
 
 console.log(y)
 console.log(typeof(y))
+
+//dynamically typed language
