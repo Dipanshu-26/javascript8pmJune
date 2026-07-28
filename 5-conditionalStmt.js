@@ -1,5 +1,6 @@
 //conditional statements 
 //one input multiple output 
+//if -else , ternary op, switch case
 
 //num 1-5 ==> 5 % , 6 to 10 ==> 10% , above 10 ==>20%
 
