@@ -25,3 +25,9 @@ num%2 != 0 ? console.log("odd") :console.log("even")
 //negative or positive 
 num = -23
 num>=0 ? console.log("number is positive") : console.log("number is negative")
+
+//-----------------------------------------------------------------------------
+let isLogin =  false 
+isLogin ? console.log("Welcome") : console.log("plz try again...")
+
+
