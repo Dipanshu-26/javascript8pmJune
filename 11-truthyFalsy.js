@@ -1,0 +1,134 @@
+//Truthy and falsy values 
+
+// falsy ==> 0,undefined , null, NaN, "",''
+// truthy ==>1, any value other than this 
+
+if(0){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------
+
+if(undefined){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------
+if("undefined"){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//-----------------------------------------------------
+let a=10
+if(a==0){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------------
+if(null){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//-------------------------------------------------------
+if(""){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------------
+if(''){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//-----------------------------------------------------------
+let x= undefined
+if(x){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//------------------------------------------------------------
+if(x==undefined){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//---------------------------------------------------------------
+x=NaN
+if(x){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//-----------------------------------------------------------------
+if(x==NaN){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//-----------------------------------------------------------------------
+if(isNaN(x)){             //x==NaN
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//----------------------------------------------------------------------
+if("dip"){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//-----------------------------------------------------------------
+if(3){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------------------------
+if([]){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------------------
+if({}){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//----------------------------------------------------------------
+if(3>6){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
+//--------------------------------------------------------------
+if(false){
+    console.log("hello")
+}
+else{
+    console.log("bye")
+}
