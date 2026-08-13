@@ -45,6 +45,8 @@ console.log(arr.at(0))
 console.log(arr.at(4))
 console.log(arr.at(9))
 
+
+//sort
 arr=[89,76,45,90,34,22,11,33]
 console.log(arr.sort())
 
