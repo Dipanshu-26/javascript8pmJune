@@ -85,3 +85,5 @@ function substraction(){
 let q2=substraction()
 let a1 = q2(11,22)
 console.log(a1)
+
+//let var const 
