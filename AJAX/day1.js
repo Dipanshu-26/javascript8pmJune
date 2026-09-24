@@ -69,7 +69,25 @@ function getInfo(){
     },1000)
 }
 
-getInfo()
+//getInfo()
 
 //-----------------------------------------------------------------------------------------------
 //call back hell
+//tightely coupled , can not ued seperately
+
+function getInfo2(){
+    setTimeout(function(){
+        console.log("user created")
+        setTimeout(function(){
+            console.log("id created")
+            setTimeout(function(){
+                console.log("get user info")
+            },1000)
+        },2000)
+    },4000)
+}
+
+getInfo2()
+//---------------------------------------------------------------------------------------------------
+//promise 
+//pending , resolved , rejected
