@@ -1,0 +1,26 @@
+
+In Playwright, Locators are used to find elements on a webpage. The main locator functions are:
+
+| Locator              | Example                                       | Best used for                   |
+| -------------------- | --------------------------------------------- | ------------------------------- |
+| `getByRole()`        | `page.getByRole('button', { name: 'Login' })` | Buttons, links, headings, etc.  |
+| `getByText()`        | `page.getByText('Welcome')`                   | Visible text                    |
+| `getByLabel()`       | `page.getByLabel('Username')`                 | Form fields with labels         |
+| `getByPlaceholder()` | `page.getByPlaceholder('Enter email')`        | Inputs with placeholder         |
+| `getByAltText()`     | `page.getByAltText('Company Logo')`           | Images                          |
+| `getByTitle()`       | `page.getByTitle('Close')`                    | Elements with `title` attribute |
+| `getByTestId()`      | `page.getByTestId('login-button')`            | Elements with test IDs          |
+| `locator()`          | `page.locator('#username')`                   | CSS/XPath or other selectors    |
+
+Recommended priority
+
+For reliable Playwright automation, generally prefer:
+
+getByRole() → getByLabel() → getByText() → getByPlaceholder() → getByTestId() → locator()
+
+1. Example with CSS
+    await page.getByRole('button', { name: 'Login' }).click();
+
+2. Example with XPath
+    await page.locator('//button[text()="Login"]').click();
+

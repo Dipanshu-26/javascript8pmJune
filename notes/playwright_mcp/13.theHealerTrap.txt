@@ -1,0 +1,48 @@
+13 The Healer trap
+--------------------------
+The Healer is the most dangerous of the three agents. 
+It can silently make your test suite worse while appearing to help.
+
+What a bad Healer fix looks like
+
+✗ Before (original test) ==>
+    await expect(inventory.productCards).toHaveCount(6);
+
+✗ After (Healer's "fix") ==>
+    await expect(inventory.productCards).toBeVisible();
+
+The test passes. But it no longer verifies that 6 products are displayed. 
+If the app breaks and shows only 1 product, this test will still pass.
+
+The core insight : 
+This is worse than a failing test. A failing test is visible in your CI dashboard. 
+A weakened test hides in green builds until it costs your team weeks of missed regressions.
+
+Other Healer traps to watch for ==>
+Silent timeout increase:
+
+typescript    Watch for this pattern
+// Original ==>
+    await expect(page.getByText('Order Confirmed')).toBeVisible();
+
+// Healer "fix" ==>
+    await expect(page.getByText('Order Confirmed')).toBeVisible({ timeout: 60000 });
+If the app is legitimately slow, fix the app. If it is not, this timeout hides a real bug.
+
+Test skipped without justification:
+
+typescript  Watch for this pattern
+// Healer adds ==>
+    test.fixme('should complete checkout', async ({ page }) => { ... });
+
+Sometimes this is legitimate. Sometimes the Healer gives up and hides the problem. 
+Always require a written reason.
+
+Page object modification:
+
+If the Healer modifies a page object to fix one test, it may break every other test using that page object. 
+Page object changes need human review.
+
+The rule :
+Every Healer fix must be reviewed with one question: "Did the Healer fix the test, or fix the pass/fail status?"
+If the answer is not immediately clear, the fix is not ready to merge.

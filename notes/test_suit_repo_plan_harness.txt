@@ -1,0 +1,138 @@
+These are common software testing terms. Here is the difference with a simple Login feature example.
+
+| Term                      | Meaning                                                           | Example                                                  |
+| ------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------- |
+| **Test / Test Case**      | A specific check performed to verify a feature                    | Verify login with valid credentials                      |
+| **Test Set / Test Suite** | A collection of related test cases                                | Login test set containing 20 login test cases            |
+| **Test Plan**             | A document describing the overall testing strategy and approach   | What to test, who will test, timeline, tools, risks      |
+| **Test Repository**       | Central location where testing assets are stored                  | Test cases, test data, scripts, reports                  |
+| **Test Harness**          | Tools and supporting components used to execute and control tests | Playwright + test runner + mocks + test data + reporting |
+
+
+1. Test / Test Case : A test case verifies one specific functionality or scenario.
+-----------------------------------------------------------------------------------
+Example:Test Case ID: TC_LOGIN_001
+
+Scenario: Login with valid credentials
+Steps:
+    1. Open login page
+    2. Enter valid username
+    3. Enter valid password
+    4. Click Login
+Expected Result: User should successfully navigate to Dashboard.
+
+2. Test Set / Test Suite : A test set is a collection of test cases grouped for a particular purpose.
+------------------------------------------------------------------------------------------------------
+For example:
+
+    Login Test Set
+    │
+    ├── TC01 - Login with valid credentials
+    ├── TC02 - Login with invalid password
+    ├── TC03 - Login with invalid username
+    ├── TC04 - Login with empty username
+    ├── TC05 - Login with empty password
+    └── TC06 - Verify Forgot Password
+
+You might create different test sets such as:
+    Smoke Test Set → Critical functionality
+    Regression Test Set → Existing functionality
+    Login Test Set → Login-related tests
+
+In Playwright, a test file or test.describe() block can serve as a logical grouping of tests.
+
+3. Test Plan : A test plan is a high-level document describing how testing will be performed for a project or release.
+-----------------------------------------------------------------------------------------------------------------------
+It normally covers:
+    Scope — what will and won't be tested
+    Testing types — functional, regression, API, automation, etc.
+    Test environment
+    Testing tools
+    Roles and responsibilities
+    Entry and exit criteria
+    Schedule
+    Risks
+    Deliverables
+
+Example:E-commerce Application Test Plan
+
+Scope: Login, Registration, Product Search, Cart, Payment
+
+Testing:
+    Manual Testing
+    API Testing
+    Automation Testing
+
+Automation Tool: Playwright
+
+Environment: QA
+
+Browsers: Chrome, Firefox, Safari
+
+Exit Criteria: 
+    No open critical defects
+    95% test cases passed
+
+Think of it as: Test Plan = Overall testing roadmap
+
+4. Test Repository
+-------------------------
+A test repository is a centralized place used to store and manage testing-related assets.
+
+    Test Repository
+    │
+    ├── Test Cases
+    ├── Test Suites
+    ├── Test Data
+    ├── Automation Scripts
+    ├── Test Reports
+    ├── Screenshots
+    └── Other Testing Documentation
+
+For example, a QA team may manage manual test cases in a test-management system, 
+while Playwright automation code is stored in a Git repository.
+
+5. Test Harness : 
+----------------------
+A test harness is the collection of software, tools, test data, drivers, mocks, scripts, 
+and other components required to execute tests and evaluate results.
+
+For a Playwright automation project, conceptually:
+    Test Harness
+    │
+    ├── Playwright Test Runner
+    ├── Test Scripts
+    ├── Browser Setup
+    ├── Test Data
+    ├── Fixtures
+    ├── Mock APIs
+    ├── Configuration
+    └── Reporters
+
+So your Playwright automation framework can be considered part of, or form, a test harness.
+
+Easy way to remember
+Test
+   ↓
+One thing to verify
+
+Test Set
+   ↓
+Group of tests
+
+Test Plan
+   ↓
+Plan for overall testing
+
+Test Repository
+   ↓
+Place where testing assets are stored
+
+Test Harness
+   ↓
+Setup/tools used to execute and support tests
+
+Interview example: If you have 50 Playwright tests for an e-commerce website, 
+each individual scenario is a test, related tests can be grouped into a test set,
+the overall testing approach is documented in a test plan, testing assets are maintained in a test repository, 
+and the supporting Playwright execution setup can be considered a test harness.

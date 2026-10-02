@@ -1,0 +1,515 @@
+1. Tell me about your experience in testing.
+----------------------------------------------
+Answer: 
+I have experience in both manual and automation testing of web applications. 
+In manual testing, I have worked on requirement analysis, test scenario and test case design, 
+functional testing, regression testing, smoke and sanity testing, defect reporting, and retesting.
+
+For automation, I have worked with Playwright using JavaScript and implemented automation using the Page Object Model. 
+I have experience with UI and API automation, test data handling, fixtures, reusable functions, cross-browser testing, 
+parallel execution, and reporting.
+
+I also have experience with API testing using Postman and Playwright, SQL for database validation, 
+Git for version control, and CI/CD execution.
+
+2. What is the difference between Smoke, Sanity, and Regression Testing?
+-------------------------------------------------------------------------
+Answer:
+Smoke Testing: Checks whether critical functionality of a new build is working and whether the build is stable enough for further testing.
+
+Sanity Testing: Focuses on a specific changed or fixed functionality to quickly verify that it works as expected.
+
+Regression Testing: Verifies that new changes have not negatively affected existing functionality.
+
+Example:
+    New Build
+    ↓
+    Smoke Testing
+    ↓
+    New payment feature changed
+    ↓
+    Sanity Testing of payment
+    ↓
+    Regression Testing
+    ↓
+    Verify existing application functionality
+
+3. What is the difference between Retesting and Regression Testing?
+--------------------------------------------------------------------
+Answer:
+Retesting means testing a specific defect again after the developer has fixed it. 
+Regression testing means testing related and existing functionality to ensure that the fix or new change hasn't introduced other issues.
+
+For example, if a login bug is fixed, I retest that particular bug. 
+Then I may perform regression testing on login, logout, session management, and other related functionality.
+
+4. How do you decide the regression test cases?
+-----------------------------------------------
+Answer:
+I select regression test cases based on the impact of the change, critical business functionality, frequently used features, 
+integration points, previously defect-prone areas, and dependencies between modules.
+
+I first perform impact analysis to understand which areas could be affected. 
+If there is limited time, I prioritize high-risk and business-critical scenarios.
+
+5. You have 500 test cases but only one day for testing. What will you do?
+---------------------------------------------------------------------------
+Answer:
+
+I would use risk-based testing instead of trying to execute all 500 test cases. I
+ would first identify business-critical functionality and areas impacted by the latest changes.
+
+I would prioritize smoke tests, critical end-to-end workflows, high-risk modules, integration points, 
+and areas with a history of defects. I would also execute available automation regression suites.
+
+Finally, I would communicate the testing scope and any untested areas to stakeholders 
+so that the release decision is made with clear information about the remaining risks.
+
+6. What will you do if a developer rejects your bug?
+-------------------------------------------------------
+Answer:
+First, I would reproduce the issue and verify that my test environment and test data are correct. 
+Then I would compare the actual behavior with the requirement or acceptance criteria.
+
+I would provide clear reproduction steps and supporting evidence such as screenshots, videos, API responses, or logs.
+
+If there is still disagreement, I would discuss it with the developer and, if required, 
+involve the BA or product owner to clarify the expected business behavior.
+
+7. What is Severity vs Priority?
+---------------------------------
+Answer:
+    Severity: How seriously the defect impacts the application.
+    Priority: How urgently the defect should be fixed.
+
+Example:
+A spelling mistake on the company's homepage:
+    Severity → Low
+    Priority → High
+
+Application crashes on a rarely used admin page:
+    Severity → High
+    Priority → Could be Medium
+
+Priority ultimately depends on business context.
+
+8. What is the defect lifecycle?
+-----------------------------------------
+Answer:
+A typical defect lifecycle is:
+
+     
+                          New
+                           ↓
+                       Assigned
+                           ↓
+                         Open   ──────────├─────────────→ Duplicate
+                           ↓              ├─────────────→ Rejected     
+                         Fixed            ├─────────────→ Deferred
+                           ↓              └─────────────→ Not A Bug
+                    Pending Retest
+                           ↓
+                        Retest
+                      ↙          ↘
+                Reopened       Verified
+                    ↓              ↓
+                Assigned         Closed
+                    ↓
+                   Open
+
+Main Flow:
+----------
+New
+ ↓
+Assigned
+ ↓
+Open
+ ↓
+Fixed
+ ↓
+Pending Retest
+ ↓
+Retest
+ ↓
+Verified
+ ↓
+Closed
+
+If Retest Fails:
+---------------
+Retest
+ ↓
+Reopened
+ ↓
+Assigned
+ ↓
+Open
+ ↓
+Fixed
+ ↓
+Pending Retest
+ ↓
+Retest
+Actual statuses depend on the organization's workflow.
+
+9. How do you test a feature when requirements are unclear?
+----------------------------------------------------------------
+Answer:
+I first clarify the requirements with the BA, product owner, or relevant stakeholder. 
+I review available acceptance criteria, designs, existing application behavior, and related requirements.
+
+I document my assumptions and get clarification before testing critical business scenarios. 
+Meanwhile, I can perform exploratory testing on areas where expected behavior is reasonably understood.
+
+10. What do you do when requirements change during a sprint?
+---------------------------------------------------------------
+Answer:
+I first understand the change and perform impact analysis. 
+Then I update affected test scenarios, test cases, test data, and automation scripts.
+
+I identify related functionality that needs regression testing and communicate any impact on testing effort 
+or timelines to the team.
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+Playwright
+--------------
+11. Why did you choose Playwright?
+-----------------------------------------
+Answer:
+Playwright provides cross-browser support for Chromium, Firefox, and WebKit. 
+It has built-in auto-waiting, web-first assertions, browser context isolation, network interception, 
+API testing capabilities, tracing, screenshots, video support, and parallel execution.
+
+It allows us to handle both UI and API automation within the same framework, which is useful for end-to-end automation.
+
+
+12. Explain Browser, BrowserContext, and Page.
+------------------------------------------------
+Answer:
+    Browser
+    ↓
+    Browser Context
+    ↓
+    Page
+
+Browser: Browser instance.
+BrowserContext: An isolated browser session similar to an independent incognito profile.
+Page: A browser tab or page inside a context.
+Different contexts can have independent cookies and sessions.
+
+13. What is auto-waiting in Playwright?
+-----------------------------------------
+Answer:
+Playwright automatically waits for elements to become actionable before performing actions.
+For example:
+    await page.getByRole('button', { name: 'Login' }).click();
+
+Before clicking, Playwright performs relevant actionability checks, such as whether the element is visible, 
+stable, able to receive events, and enabled.
+Therefore, we generally avoid unnecessary hard-coded waits.
+
+14. What locators do you prefer in Playwright?
+-----------------------------------------------
+Answer:
+I generally prefer user-facing and resilient locators such as:
+    page.getByRole()
+    page.getByLabel()
+    page.getByPlaceholder()
+    page.getByText()
+    page.getByTestId()
+
+For example:
+    await page.getByRole('button', {
+        name: 'Login'
+    }).click();
+
+I avoid fragile XPath or long CSS selectors unless necessary.
+
+15. What is the difference between Locator and ElementHandle?
+-----------------------------------------------------------------
+Answer:
+A Locator represents a way to find an element and works with Playwright's auto-waiting and retryability. 
+ElementHandle points to a particular DOM element.
+For most test automation, I prefer Locators because they are designed for reliable Playwright test interactions.
+
+16. What are fixtures in Playwright?
+--------------------------------------
+Answer:
+Fixtures provide reusable setup and dependencies to tests. 
+Playwright provides built-in fixtures such as page, context, browser, and request.
+
+We can also create custom fixtures for reusable project-specific setup, such as authenticated pages, API clients, or test data.
+
+Example:
+    test('Login test', async ({ page }) => {
+        await page.goto('/login');
+    });
+Here, page is a built-in fixture.
+
+17. What is the difference between hooks and fixtures?
+---------------------------------------------------------
+Answer:
+Hooks execute setup or cleanup logic at particular points:
+    test.beforeEach()
+    test.afterEach()
+    test.beforeAll()
+    test.afterAll()
+Fixtures provide reusable dependencies and can manage their own setup and teardown.
+For complex frameworks, fixtures often provide better isolation and reusability than putting all setup logic into hooks.
+
+18. How do you handle authentication in Playwright?
+-----------------------------------------------------
+Answer:
+Instead of logging in through the UI before every test, 
+I can authenticate once and save the authenticated browser state using storageState.
+Other tests can reuse that state, reducing execution time.
+Conceptually:
+    Login Once
+    ↓
+    Save storageState
+    ↓
+    Reuse Authentication State
+    ↓
+    Execute Tests
+
+19. How do you handle multiple tabs?
+--------------------------------------
+Answer:
+    const pagePromise = context.waitForEvent('page');
+    await page.getByText('Open New Tab').click();
+    const newPage = await pagePromise;
+    await newPage.waitForLoadState();
+
+I start waiting for the new page before triggering the action that opens it to avoid race conditions.
+
+20. How do you handle iframes?
+---------------------------------
+Answer:
+I use frameLocator().
+    const frame = page.frameLocator('#payment-frame');
+    await frame
+        .getByRole('button', { name: 'Pay' })
+        .click();
+
+21. How do you handle dynamic elements?
+------------------------------------------
+Answer:
+I use stable locators based on accessible roles, labels, text, or test IDs rather than dynamic attributes.
+I also use Playwright's locator filtering when necessary.
+For example:
+    page.getByRole('button', { name: 'Submit' })
+
+Instead of:
+    page.locator('#button_12345')
+when 12345 changes dynamically.
+
+22. How do you handle flaky tests?
+------------------------------------
+Answer:
+First, I identify the root cause rather than simply adding retries. 
+I check unstable locators, hard-coded waits, test-data dependencies, shared state, network timing, 
+environment issues, and dependencies between tests.
+
+I use stable locators, Playwright's auto-waiting and web-first assertions, isolated test data, and independent tests.
+ I also use traces, screenshots, videos, and logs to debug failures.
+
+Retries can help detect intermittent failures, but I don't use them to hide actual flaky tests.
+
+23. Your Playwright test passes locally but fails in CI(Continuous Integration). How do you debug?
+--------------------------------------------------------------------------
+Answer:
+I first check the CI failure logs and Playwright trace. I compare environment variables, browser versions, 
+dependencies, test data, URLs, permissions, and network access between local and CI environments.
+
+I also check whether the issue is caused by parallel execution, slower CI resources, missing secrets, or test dependencies.
+
+Playwright Trace Viewer is particularly useful because it allows me to inspect actions, DOM snapshots, 
+network activity, and screenshots around the failure.
+
+Your Laptop                 CI Server/Runner
+────────────                 ────────────────
+Your OS                      Possibly Linux
+Local environment            Clean/controlled environment
+Your environment variables   CI environment variables
+Local test data              CI test data
+Local network                CI network
+Your browser versions        CI-installed browser versions
+
+24. Explain your Playwright automation framework.
+---------------------------------------------------
+Answer:
+I have structured the framework using the Page Object Model. 
+Page classes contain locators and reusable page-level actions, while test files contain test scenarios and assertions.
+
+I maintain configuration separately using playwright.config.js. 
+Depending on project requirements, I use fixtures for reusable setup, separate test data and utility functions, 
+and environment variables for sensitive configuration.
+
+The framework supports multiple environments, parallel execution, retries where appropriate, 
+HTML reporting, screenshots, traces, and CI/CD execution.
+
+A typical structure:
+    project/
+    │
+    ├── tests/
+    ├── pages/
+    ├── fixtures/
+    ├── utils/
+    ├── test-data/
+    ├── playwright.config.js
+    └── package.json
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+API Testing
+---------------------
+25. How do you perform API testing?
+-------------------------------------
+Answer:
+For manual API testing, I use Postman to send requests and validate status codes, response bodies, 
+headers, response times, authentication, and business logic.
+
+For automation, I use Playwright's API request capabilities. I cover positive and negative scenarios, 
+API chaining, authentication, response validation, and schema validation.
+
+26. How do you validate API schema?
+------------------------------------
+Answer:
+Manually, I compare the API response structure and data types against API documentation or the Swagger/OpenAPI specification.
+
+In Playwright JavaScript automation, I can use AJV to validate the response against a JSON Schema. This verifies required fields, data types, and response structure.
+
+I separately validate important business values because schema validation alone does not verify business correctness.
+
+27. Authentication vs Authorization?
+----------------------------------------
+Answer:
+Authentication verifies who the user is, while authorization verifies what the authenticated user is allowed to do.
+
+I test authentication scenarios such as valid, invalid, missing, and expired tokens. 
+For authorization, I test different user roles and verify that users cannot access resources outside their permissions.
+
+28. Explain 401 vs 403.
+------------------------
+Answer:
+401 generally indicates that valid authentication credentials are required, such as when a token is missing, invalid, or expired.
+403 means the request is understood, but the user does not have permission to access the requested resource.
+
+29. API returns 200 but incorrect data. Is it a pass?
+--------------------------------------------------------
+Answer:
+No. Status code validation is only one part of API testing.
+I also validate the response body, expected values, schema, headers where relevant, and business rules. 
+If the API returns 200 but incorrect business data, the test should fail.
+
+30. API works in Postman but fails in Playwright. What do you check?
+---------------------------------------------------------------------
+Answer:
+I compare both requests, including URL, HTTP method, headers, authentication token, query parameters, path parameters, and request body.
+I also check environment variables, content type, dynamically generated data, token expiration, and encoding.
+I try to make the Playwright request equivalent to the successful Postman request and then identify the difference.
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+SQL
+-------
+31. Why does a QA engineer need SQL?
+-----------------------------------------
+Answer:
+I use SQL for backend data validation. For example, after creating a user through the UI or API, 
+I may validate whether the expected record has been created in the database when direct database access is permitted in the test environment.
+
+I use SELECT queries, joins, GROUP BY, aggregate functions, subqueries, and other queries depending on project requirements.
+
+32. How do you find duplicate records?
+---------------------------------------
+Example:
+    SELECT email, COUNT(*)
+    FROM users
+    GROUP BY email
+    HAVING COUNT(*) > 1;
+    
+33. WHERE vs HAVING?
+Answer: WHERE filters rows before grouping and aggregation, whereas HAVING filters groups after GROUP BY.
+Example:
+    SELECT department, COUNT(*)
+    FROM employees
+    WHERE active = 1
+    GROUP BY department
+    HAVING COUNT(*) > 10;
+    JavaScript
+
+34. Difference between var, let, and const?
+--------------------------------------------
+Answer:
+var is function-scoped, while let and const are block-scoped. let allows reassignment, whereas a const binding cannot be reassigned.
+In Playwright automation, I generally use const by default and let when reassignment is required.
+
+35. Why is async/await important in Playwright?
+------------------------------------------------
+Answer:
+Browser operations are asynchronous. await ensures that the asynchronous Playwright operation completes before the dependent code continues.
+
+Example:
+    await page.goto('/login');
+    await page.getByLabel('Username').fill('admin');
+    await page.getByRole('button', { name: 'Login' }).click();
+
+Forgetting await can cause unexpected behavior or race conditions.
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+Real Project Scenario Questions
+---------------------------------
+36. Which test cases should be automated?
+Answer:
+I prioritize:
+    Repetitive regression tests
+    Smoke tests
+    Stable functionality
+    Critical business workflows
+    Data-driven scenarios
+    Cross-browser scenarios
+    High-volume repetitive tests
+I generally avoid automating frequently changing functionality or one-time scenarios unless automation provides sufficient value.
+
+37. 500 automation tests take 3 hours. How will you reduce execution time?
+----------------------------------------------------------------------------
+Answer:
+First, I analyze where execution time is being spent. 
+I can use parallel execution and distribute tests across workers or CI machines where infrastructure permits.
+
+I remove unnecessary waits, optimize slow setup operations, reuse authentication state where appropriate, 
+and avoid unnecessary UI steps by using APIs for test setup when possible.
+
+I also organize tests into smoke and regression suites so that every pipeline does not necessarily 
+need to execute the entire regression suite.
+
+38. A production bug was missed by QA. What will you do?
+----------------------------------------------------------
+Answer:
+First, I would understand and reproduce the issue and support the team in verifying the fix.
+Then I would perform root-cause analysis to understand why the issue was missed. 
+It could be missing test coverage, unclear requirements, an environment difference, missing test data, 
+or an integration scenario that wasn't considered.
+
+Based on the root cause, I would add the missing test case and automate it if it is suitable for regression automation.
+
+39. How do you work in Agile?
+------------------------------
+Answer:
+I participate in sprint planning, requirement discussions, daily stand-ups, refinement sessions, and retrospectives as applicable.
+
+During the sprint, I analyze stories and acceptance criteria, prepare test scenarios, coordinate with developers, 
+test completed stories, report and retest defects, perform regression testing, and support release validation.
+
+I try to get involved early in requirement discussions so that potential gaps and testability issues 
+can be identified before development is completed.
+
+40. What is your role in a release?
+---------------------------------------
+Answer:
+Before a release, I verify that planned testing is completed, critical business flows are working, 
+and important defects have been addressed according to the team's release criteria.
+
+I execute the required smoke and regression suites, review automation results, and communicate known defects, 
+untested areas, and remaining risks to stakeholders.
+
+The final release decision is generally a shared business and technical decision rather than QA alone approving or rejecting a release.

@@ -1,0 +1,353 @@
+1️⃣ What are the Principles of Software Testing?
+-------------------------------------------------------------
+There are 7 fundamental principles of software testing:
+- Testing shows the presence of defects, not their absence — Testing can identify defects, but it cannot prove that the software is completely defect-free.
+- Exhaustive testing is impossible — We cannot test every possible input and combination, so we prioritize testing based on risk, criticality, and business impact.
+- Early testing saves time and cost — Testing activities should start early in the SDLC to identify defects before they become expensive to fix.
+- Defects cluster together — A small number of modules often contain a large percentage of defects, so defect-prone areas require additional attention.
+- Pesticide paradox — If we repeatedly execute the same tests, they may eventually stop finding new defects. Test cases should be reviewed and updated, and exploratory testing can help discover new issues.
+- Testing is context-dependent — The testing approach depends on the type of application. For example, testing a banking application differs from testing a social media application.
+- Absence-of-errors fallacy — Even if an application has very few defects, it can still fail if it does not meet user needs or business requirements.
+
+Interview answer:
+The seven testing principles are: testing shows the presence of defects, exhaustive testing is impossible, 
+early testing saves time and cost, defects tend to cluster, pesticide paradox, testing is context-dependent, 
+and absence-of-errors fallacy. I apply these principles practically through risk-based testing, 
+early requirement reviews, and continuously improving regression coverage.
+
+2️⃣ What is the difference between a Test Scenario and a Test Case?
+--------------------------------------------------------------------------
+Answer:A Test Scenario is a high-level description of what functionality needs to be tested,
+whereas a Test Case describes how to test a specific condition, including steps, test data, preconditions, and expected results.
+
+Example:
+Test Scenario:Verify Login functionality.
+
+Test Cases:
+Verify login with valid username and password.
+Verify login with invalid password.
+Verify login with blank credentials.
+Verify password masking.
+Verify account lock behavior after repeated invalid attempts, if applicable.
+One test scenario can have multiple test cases.
+
+One-line answer:Test Scenario tells us what to test; Test Case tells us how to test it.
+
+3️⃣ What is the difference between a Test Plan and a Test Strategy?
+--------------------------------------------------------------------------
+Answer:
+A Test Strategy defines the high-level overall approach to testing, such as testing types, 
+methodologies, tools, automation approach, and standards.
+
+A Test Plan is more project or release-specific and defines the testing scope, resources, 
+responsibilities, schedule, environments, risks, entry and exit criteria, and deliverables.
+
+For example:
+Test Strategy
+     ↓
+Overall testing approach
+Risk-based testing
+Automation approach
+Testing techniques
+
+
+Test Plan
+     ↓
+Project/Release-specific execution
+Scope
+Resources
+Schedule
+Environment
+Risks
+Entry/Exit Criteria
+
+One-line answer: Test Strategy defines the overall testing approach, 
+while Test Plan defines how testing will be planned and executed for a specific project or release.
+
+
+4️⃣ If you are given limited time to test a product, how would you approach testing? What would you prioritize?
+-----------------------------------------------------------------------------------------------------------------
+Answer: If I have limited time, I follow a risk-based testing approach. 
+First, I understand the recent changes and perform impact analysis. 
+Then I prioritize business-critical and high-risk functionality.
+I start with smoke testing to ensure that the build is stable. 
+Then I focus on critical end-to-end business workflows, recently modified functionality, 
+integration points, frequently used features, and historically defect-prone areas.
+
+I execute available automation suites where appropriate to increase regression coverage in limited time. 
+I also communicate the reduced testing scope and any untested areas to stakeholders so that 
+the release decision considers the remaining risks.
+
+Priority:
+
+1. Smoke Testing
+       ↓
+2. Business-Critical Features
+       ↓
+3. Recently Changed Features
+       ↓
+4. High-Risk Areas
+       ↓
+5. Integration Points
+       ↓
+6. Defect-Prone Areas
+       ↓
+7. Automated Regression
+
+5️⃣ What is the difference between Severity and Priority? Explain with an example.
+------------------------------------------------------------------------------------
+Answer:
+Severity represents the impact of a defect on the application's functionality,
+Priority represents how urgently the defect should be fixed.
+
+Example 1: A spelling mistake in the company name on the homepage:
+Severity → Low
+Priority → High
+
+It doesn't significantly affect application functionality, but because it is highly visible 
+and affects the company's image, the business may want it fixed immediately.
+
+Example 2:Application crashes on a rarely used internal admin function:
+Severity → High
+Priority → Possibly Medium
+
+The technical impact is serious, but the business may prioritize other issues first depending 
+on usage and release requirements.
+
+One-line answer:Severity = How serious is the defect? Priority = How urgently should it be fixed?
+
+6️⃣ What is the difference between Static Testing and Dynamic Testing?
+-----------------------------------------------------------------------
+Answer:Static Testing is performed without executing the software. 
+It involves reviewing requirements, designs, test cases, or source code to identify defects early.
+
+Dynamic Testing involves executing the application and validating its actual behavior against expected results.
+| Static Testing                | Dynamic Testing                         |
+| ----------------------------- | --------------------------------------- |
+| No code/application execution | Application/code is executed            |
+| Finds defects early           | Finds defects during execution          |
+| Reviews and inspections       | Functional and non-functional execution |
+| Example: Requirement review   | Example: Login functionality testing    |
+
+
+Example:Static Testing:
+Review login requirements
+↓
+Find missing password validation requirement
+
+Dynamic Testing:
+Run application
+↓
+Enter invalid password
+↓
+Verify error message
+
+7️⃣ What is the difference between GROUP BY and ORDER BY in SQL?
+--------------------------------------------------------------------
+Answer:
+GROUP BY groups rows that have the same values in specified columns and is commonly used with aggregate functions 
+such as COUNT(), SUM(), AVG(), MIN(), and MAX().
+
+ORDER BY sorts the final result in ascending or descending order.
+
+GROUP BY example:
+
+SELECT department, COUNT(*) AS employee_count
+FROM employees
+GROUP BY department;
+
+This groups employees by department and calculates the number of employees in each department.
+
+ORDER BY example:
+
+SELECT name, salary
+FROM employees
+ORDER BY salary DESC;
+
+This sorts employees from highest to lowest salary.
+
+You can also use them together:
+
+SELECT department, COUNT(*) AS employee_count
+FROM employees
+GROUP BY department
+ORDER BY employee_count DESC;
+
+One-line answer:
+
+GROUP BY is used to group data, usually for aggregation, while ORDER BY is used to sort the result.
+
+8️⃣ Describe all HTTP Methods
+----------------------------------
+GET : Used to retrieve data from the server.
+GET /users/101
+Example: Get user details.
+GET requests should generally not modify server resources.
+
+POST : Used to submit data, commonly to create a new resource or trigger an operation.
+POST /users
+Example:
+{
+    "name": "Ram",
+    "email": "ram@example.com"
+}
+
+PUT : Commonly used to replace the complete representation of a resource at a known URI.
+PUT /users/101
+If the API defines PUT as full replacement, omitted fields may be reset or removed according to the API contract.
+
+PATCH :Used to partially update a resource.
+PATCH /users/101
+For example:
+{
+    "name": "Sham"
+}
+
+Only the specified change is requested.
+
+DELETE : Used to delete a resource.
+DELETE /users/101
+HEAD
+Similar to GET, but the server returns response headers without the response body.
+It can be useful for checking metadata or resource availability without transferring the full response representation.
+
+OPTIONS
+Returns information about the communication options supported by the target resource/server.
+For example, it may indicate supported methods:
+
+Allow: GET, POST, OPTIONS
+It is also involved in CORS preflight requests in browsers.
+
+TRACE : Performs a diagnostic loop-back of the request message, where supported. 
+It is mainly intended for diagnostics and is often disabled for security reasons.
+
+CONNECT : Establishes a tunnel to the destination server, commonly used by HTTP proxies, especially for tunneling HTTPS traffic.
+
+Quick interview table : 
+
+| Method  | Purpose                                       |
+| ------- | --------------------------------------------- |
+| GET     | Retrieve data                                 |
+| POST    | Submit/create data                            |
+| PUT     | Replace/update a resource representation      |
+| PATCH   | Partially update                              |
+| DELETE  | Delete resource                               |
+| HEAD    | Retrieve headers without response body        |
+| OPTIONS | Check communication options/supported methods |
+| TRACE   | Diagnostic request loop-back                  |
+| CONNECT | Establish a network tunnel                    |
+
+Additional interview point: GET, HEAD, OPTIONS, and TRACE are defined as safe methods because 
+their intended semantics are read-only. PUT and DELETE are idempotent, while POST generally is not. 
+PATCH is not guaranteed to be idempotent; it depends on how the patch operation is defined.
+
+9️⃣ How many test cases can you write in a day?
+-------------------------------------------------
+This is a tricky interview question. Don't give a fixed number without context.
+
+Strong interview answer:
+The number of test cases I can write in a day depends on the complexity of the requirements, 
+application domain, test case detail level, availability and clarity of requirements, 
+and whether test data or environment preparation is required.
+
+For straightforward functionality, I may be able to write a larger number of test cases, 
+while complex business workflows may require significantly more analysis and fewer test cases per day.
+
+My focus is on meaningful test coverage and quality rather than achieving a fixed test case count. 
+I ensure that positive, negative, boundary, validation, integration, and relevant edge cases are covered.
+
+If the interviewer forces you to give a number, you can say:
+For a medium-complexity feature with clear requirements, 
+I might write approximately 15–25 detailed test cases in a day, 
+but this is only an estimate and varies significantly depending on complexity and the organization's test case format.
+
+Avoid saying: "I always write 50 test cases per day."
+
+Because writing: 50 simple validation test cases
+
+is very different from designing: 10 complex end-to-end payment test cases
+
+For a 3–6 years experienced candidate, emphasize coverage, risk, requirement analysis, 
+and quality, rather than only the number of test cases.
+
+
+                     +-----------+
+                     |    NEW    |
+                     +-----------+
+                           |
+                           v
+                     +-----------+
+        |----------- | ASSIGNED  |
+        |            +-----------+                       
+        |                  |                            
+        |                  v                            
+        |            +-----------+                      
+        |            |   OPEN    |----------------+     
+        |            +-----------+                |     
+        |                  |                      |     
+        |                  |                      +-------------> +-------------+
+        |                  |                      |               | DUPLICATE   |
+        |                  |                      |               +-------------+
+        |                  |                      |
+        |                  |                      +-------------> +-------------+
+        |                  |                      |               | REJECTED    |
+        |                  |                      |               +-------------+
+        |                  |                      |
+        |                  |                      +-------------> +-------------+
+        |                  |                      |               | DEFERRED    |
+        |                  |                      |               +-------------+
+        |                  |                      |
+        |                  |                      +-------------> +-------------+
+        |                  |                                      | NOT A BUG   |
+        |                  |                                      +-------------+
+        |                  |
+        |                  v
+        |             +-----------+
+        |             |   FIXED   |
+        |             +-----------+
+        |                   |
+        |                   v
+        |          +------------------+
+        |         | PENDING RETEST   |
+        |         +------------------+
+        |                  |
+        |                  v
+ +-------------+     +-----------+
+ | REOPENED    |     |  RETEST   |--------------------+
+ +-------------+     +-----------+                    |
+                           |                         |
+                           |                         |
+                           v                         |
+                     +-----------+                   |
+                     | VERIFIED  |                   |
+                     +-----------+                   |
+                           |                         |
+                           v                         |
+                     +-----------+                   |
+                     |  CLOSED   |                   |
+                     +-----------+                   |
+                                          +----------------+            |
+                                                     |
+                                           
+                                            |   REOPENED     |
+                                            +----------------+
+                                                     |
+                                                     |
+                                                     +---------> ASSIGNED
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

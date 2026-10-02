@@ -1,0 +1,304 @@
+1. What is API testing?
+------------------------
+Answer:API testing verifies the functionality, reliability, security, and performance 
+of APIs by sending requests to endpoints and validating responses. 
+I typically validate the status code, response body, headers, response time, schema, authentication, and business logic. 
+I perform manual API testing using Postman and automate APIs using tools or frameworks such as Playwright.
+
+2. What do you validate while testing an API?
+-----------------------------------------------
+Answer: 
+I validate:
+    HTTP status code
+    Response body and data
+    Response headers
+    Response time
+    JSON schema and data types
+    Authentication and authorization
+    Error messages
+    Business rules
+    Mandatory and optional parameters
+    Boundary and negative scenarios
+
+For example, for a GET /users/101 API, 
+I verify that the status is 200, the correct user is returned, 
+required fields are present, and the response structure is correct.
+
+4. What is the difference between PUT and PATCH?
+---------------------------------------------------
+Answer:PUT is generally used to replace or update the complete representation of a resource, whereas PATCH is used for partial updates.
+For example, if an employee has name, email, salary, and department, PATCH can be used to update only the salary.
+
+5. What are the important HTTP status codes?
+-------------------------------------------------
+
+| Code | Meaning                                   |
+| ---- | ----------------------------------------- |
+| 200  | OK                                        |
+| 201  | Created                                   |
+| 204  | No Content                                |
+| 400  | Bad Request                               |
+| 401  | Unauthenticated / authentication required |
+| 403  | Forbidden                                 |
+| 404  | Not Found                                 |
+| 409  | Conflict                                  |
+| 422  | Unprocessable Content                     |
+| 500  | Internal Server Error                     |
+| 502  | Bad Gateway                               |
+| 503  | Service Unavailable                       |
+
+One important interview point is that 401 means the client is not properly authenticated, 
+while 403 means the server understands the request but refuses access based on permissions/authorization.
+
+6. What is the difference between path parameters and query parameters?
+-----------------------------------------------------------------------
+Answer: Path parameters identify a specific resource.
+    GET /users/101
+Here, 101 is a path parameter.
+
+Query parameters are generally used for filtering, sorting, searching, or pagination.
+    GET /users?department=IT&page=2
+Here, department and page are query parameters.
+
+7. What is the difference between headers and body?
+------------------------------------------------------
+Answer: Headers contain metadata about the request or response, such as content type and authentication information.
+    Content-Type: application/json
+    Authorization: Bearer token123
+The body contains the actual data being sent.
+{
+  "name": "John",
+  "email": "john@example.com"
+}
+
+8. What authentication methods have you worked with?
+------------------------------------------------------
+Answer:I have worked with authentication mechanisms such as Basic Authentication, 
+API keys, Bearer tokens, and token-based authentication such as OAuth 2.0 depending on the application.
+A common workflow is:
+
+Login API
+    ↓
+Receive Access Token
+    ↓
+Store Token
+    ↓
+Send Token in Authorization Header
+    ↓
+Call Protected APIs
+
+9. How do you test a POST API?
+-------------------------------
+Answer:First, I test the happy path by sending valid data and verifying the expected status code, such as 201 Created. 
+Then I validate the response body and verify that the resource was actually created, possibly using a GET API or database validation.
+
+I also test negative scenarios such as missing mandatory fields, invalid data types, duplicate data, invalid authentication, 
+boundary values, and malformed request bodies.
+
+10. How do you perform negative API testing?
+---------------------------------------------
+Answer: 
+I test scenarios such as:
+    - Missing mandatory fields
+    - Invalid field values
+    - Incorrect data types
+    - Empty request body
+    - Invalid endpoint
+    - Unsupported HTTP method
+    - Invalid or expired token
+    - Missing authorization
+    - Unauthorized user roles
+    - Invalid path/query parameters
+    - Boundary values
+    - Duplicate records
+I verify that the API returns the appropriate status code and meaningful error response without 
+exposing sensitive internal information.
+
+11. How do you automate API testing using Playwright?
+--------------------------------------------------------
+Answer: Playwright provides an API request context that allows us to test APIs without opening a browser.
+
+12. How do you test a POST API in Playwright?
+-----------------------------------------------
+Answer : Write playwright code
+I would also validate important response fields, headers, schema, and business rules rather than checking only the status code.
+
+13. How do you handle authentication in API automation?
+--------------------------------------------------------
+Answer: I usually call the authentication API first, extract the token from the response, and use it in subsequent API requests.
+
+14. How do you test API chaining?
+----------------------------------
+Answer: API chaining means using data returned by one API in another API.
+For example:
+    POST Create User
+        ↓
+    Get User ID
+        ↓
+    GET User using ID
+        ↓
+    PATCH User using ID
+        ↓
+    DELETE User using ID
+In automation, I extract the ID from the POST response and dynamically pass it to subsequent requests.
+
+15. How do you validate API response schema?
+-------------------------------------------------
+Answer:In API testing, schema validation is used to verify that the API response follows the expected structure, 
+required fields, and data types defined in the API contract.
+
+For example, if the expected response is:
+    {
+    "id": 101,
+    "name": "John",
+    "email": "john@example.com",
+    "active": true
+    }
+
+The schema may define:
+    {
+    "type": "object",
+    "properties": {
+        "id": { "type": "integer" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "active": { "type": "boolean" }
+    },
+    "required": ["id", "name", "email", "active"]
+    }
+In Manual API Testing : 
+When testing manually using a tool like Postman, I validate the response against the API documentation or API contract, 
+such as an OpenAPI/Swagger specification.
+
+I check:
+    Whether all required fields are present
+    Whether field names are correct
+    Whether data types are correct
+    Whether nested objects and arrays have the expected structure
+    Whether mandatory fields are missing
+    Whether unexpected fields are returned
+
+For example, if the API contract specifies:
+    id     → integer
+    name   → string
+    active → boolean
+
+but the API returns:
+    {
+    "id": "101",
+    "name": "John",
+    "active": "true"
+    }
+I would report a schema/contract mismatch because id and active are returned as strings instead of the expected integer and boolean types.
+
+In Automation Testing using Playwright + AJV
+---------------------------------------------------
+In my Playwright JavaScript automation framework, I can use AJV (Another JSON Schema Validator) 
+to validate API responses against a predefined JSON Schema.
+
+First, install AJV: npm install ajv
+
+Then validate the response:
+    import { test, expect } from '@playwright/test';
+    import Ajv from 'ajv';
+
+test('Validate API response schema', async ({ request }) => {
+    const response = await request.get('/api/users/101');
+    expect(response.status()).toBe(200);
+    const responseBody = await response.json();
+    const schema = {
+        type: 'object',
+        properties: {
+            id: { type: 'integer' },
+            name: { type: 'string' },
+            email: { type: 'string' },
+            active: { type: 'boolean' }
+        },
+        required: ['id', 'name', 'email', 'active'],
+        additionalProperties: false
+    };
+    const ajv = new Ajv();
+    const validate = ajv.compile(schema);
+    const isValid = validate(responseBody);
+    expect(isValid, JSON.stringify(validate.errors)).toBe(true);
+});
+
+Here, AJV compares the actual API response with the expected JSON Schema. 
+If a required field is missing, a data type is incorrect, or an unexpected property 
+exists when additionalProperties: false is set, the schema validation fails.
+
+Interview-ready answer: 
+For manual API testing, I validate the response structure against the API documentation or Swagger/OpenAPI specification. 
+I check required fields, field names, data types, nested objects, and arrays.
+
+For API automation in Playwright with JavaScript, I use AJV for JSON Schema validation. 
+I define the expected JSON Schema, compile it using AJV, and validate the actual API response against that schema. 
+If there is a mismatch in the structure, required properties, or data types, AJV provides validation errors and the automated test fails.
+
+Apart from schema validation, I separately validate the status code and important business values 
+because schema validation confirms the structure and data types, 
+but it does not by itself confirm that the returned business data is correct.
+
+16. How do you test API response time?
+---------------------------------------
+Answer:I verify that the response time meets the application's defined SLA or performance requirement. 
+However, functional API automation response-time checks are not a replacement for proper load or performance 
+testing because network and environment conditions can vary.
+
+SLA = Service Level Agreement.
+In API testing, an SLA defines the agreed or expected level of service, which may include requirements such as response time, 
+availability, or uptime.
+For example, suppose the requirement says:
+The API should return a response within 2 seconds for 95% of requests under normal expected load.
+
+17. What is API mocking?
+-----------------------------------
+Answer: API mocking means replacing a real API response with a controlled response during testing.
+For example, if the payment service is unavailable, I can mock a successful or failed payment response to verify how the frontend behaves.
+
+In Playwright, network interception can be done using page.route().
+    await page.route('**/api/users', async route => {
+        await route.fulfill({
+            status: 200,
+            contentType: 'application/json',
+            body: JSON.stringify({
+                name: 'Test User'
+            })
+        });
+    });
+
+18. What is the difference between API testing and UI testing?
+----------------------------------------------------------------
+Answer:API testing validates the backend service layer directly, while UI testing validates the application from the user's perspective.
+
+API tests are generally faster and less affected by UI changes. UI tests verify complete user workflows. 
+In my projects, I prefer good coverage at the API level and automate critical end-to-end business flows at the UI level.
+
+
+19. An API returns 200, but the data is incorrect. Is the test passed?
+------------------------------------------------------------------------
+Answer:No. A 200 status code only indicates that the HTTP request was successfully processed at the protocol level. 
+I also need to validate the response data and business requirements.
+
+For example:
+    Expected:
+    Employee Salary = 50,000
+
+    Actual:
+    Employee Salary = 40,000
+
+    HTTP Status = 200
+The API test should still fail because the business data is incorrect.
+
+20. Your API automation test suddenly fails. How do you debug it?
+--------------------------------------------------------------------
+Answer: First, I check whether the failure is caused by the API, test data, authentication, environment, or automation script. 
+I review the request URL, method, headers, payload, status code, and response body. I also reproduce the request manually using Postman if necessary. If the API is returning an unexpected response, I check logs and coordinate with developers. If the API works manually but automation fails, I investigate the test implementation, environment configuration, dynamic data, and dependencies.
+
+Strong interview summary : 
+I have experience in both manual and automated API testing. 
+I use tools such as Postman for manual validation and Playwright for API automation. 
+I validate status codes, response bodies, headers, schema, response time, authentication, authorization, and business logic. 
+I cover positive, negative, and boundary scenarios and work with API chaining and dynamic test data. For automation, 
+I focus on creating reusable request utilities, managing authentication centrally, 
+and integrating API tests into the overall automation and CI/CD workflow.

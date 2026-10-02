@@ -1,0 +1,40 @@
+12 How to review AI-generated tests
+---------------------------------------
+This is the most important skill in AI-assisted testing. 
+The code generation is easy. 
+The review is where engineering judgment matters.
+
+Use this checklist for every AI-generated PR:
+
+Framework compliance:
+    - Imports come from your custom fixture file, not from @playwright/test directly
+    - Page objects extend your base class
+    - File lives in the correct folder
+    - File name follows your naming convention
+
+Locator quality
+    - getByRole used wherever possible
+    - Falls back to getByLabel or getByTestId only when justified
+    - No CSS selectors
+    - No XPath
+    - Locators would survive a common UI refactor
+
+Assertion quality
+    - Assertions test the actual feature, not just "page loaded"
+    - Web-first assertions used (expect(locator).toBeVisible())
+    - No waitForTimeout
+    - Custom timeouts have code comments justifying them
+
+Page Object compliance
+    - Locators are readonly and declared in the constructor
+    - Action methods return void or the next page object
+    - No expect() calls inside page objects
+
+Test independence
+    - Test can run in isolation
+    - Does not depend on execution order
+    - Cleans up state it creates
+    - Safe to run in parallel
+
+The equation
+If the AI-generated code fails this checklist, the AI did not save you time — it just moved the work from writing to reviewing.

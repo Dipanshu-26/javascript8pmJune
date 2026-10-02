@@ -1,0 +1,139 @@
+5. Installation
+Playwright MCP can be installed in two different ways depending on what you want to do. 
+Pick the one that matches your goal.
+
+The two installation methods 
+============================================================================================
+METHOD              COMMAND                              WHEN TO USE
+--------------------------------------------------------------------------------------------
+
+Method A            code --add-mcp                       Use a standalone Playwright MCP
+Standalone MCP      '{"name":"playwright",...}'          server to give an AI agent access
+Server                                                   to Playwright browser automation
+                                                         tools.
+
+                                                         Useful when you want MCP browser
+                                                         capabilities without Playwright's
+                                                         built-in Test Agents.
+
+                                                         Can be configured at user level
+                                                         or workspace/project level.
+--------------------------------------------------------------------------------------------
+Method B            npx playwright init-agents           Use Playwright Test Agents when
+Playwright Test     --loop=vscode                        working inside a Playwright project.
+Agents
+                                                         Provides specialized agent workflows
+                                                         such as Planner, Generator, and Healer
+                                                         for planning, generating, running,
+                                                         and repairing Playwright tests.
+
+                                                         Recommended when you want an
+                                                         agent-driven Playwright testing
+                                                         workflow.
+============================================================================================
+
+QUICK DIFFERENCE
+
+Standalone Playwright MCP:
+AI Agent → Playwright MCP Server → Browser
+
+Playwright Test Agents:
+Playwright Test Agent Workflow → Planner / Generator / Healer → Playwright Tests
+
+NOTE:
+Playwright MCP and Playwright Test Agents are related to AI-assisted testing but serve
+different purposes. MCP provides browser automation tools to AI agents, while Playwright
+Test Agents provide specialized workflows for creating and maintaining Playwright tests.
+
+Method A gives you only the MCP server. 
+Method B gives you the MCP server plus the three 
+agent definitions, seed test, and workflow files — 
+everything you need for the Planner/Generator/Healer workflow described in this guide.
+
+You do not need both. If you plan to write tests, use Method B.
+------------------------------------------------------------------------------------------------------------------
+
+Method A — Standalone MCP server
+----------------------------------
+Use this if you want to give an AI browser control for tasks unrelated to test authoring — 
+for example, letting an AI explore your app, generate locators on demand, or perform browser automation for research.
+command : 
+    code --add-mcp '{"name":"playwright","command":"npx","args":["@playwright/mcp@latest"]}'
+
+What it does:
+    Registers a global MCP server named playwright in your VS Code user settings
+    Uses the standalone @playwright/mcp npm package
+    Available in any VS Code window, in any project
+
+Verify it worked:
+    Cmd + Shift + P → MCP: List Servers
+    You should see playwright in the list
+    Click Start to run it
+
+If code is not found"
+    If bash: code: command not found appears, open VS Code once, then run Cmd + Shift + P → Shell Command: 
+    Install 'code' command in PATH. Restart the terminal and try again.
+
+
+Method B — Bundled with agents (recommended)
+-----------------------------------------------
+Use this when you are inside a Playwright test project and want to use the built-in Planner, Generator, and Healer agents. 
+This is the recommended path for the workflow described in this guide.
+
+Playwright v1.56 and later ship the MCP server as part of the main Playwright package. 
+Running init-agents sets up everything in one command — the agent definitions, 
+the seed test, and the .vscode/mcp.json file that starts the MCP server via npx playwright run-test-mcp-server.    
+
+
+Step 1 — Create or open a Playwright project
+----------------------------------------------
+Terminal : 
+    mkdir pw-mcp-demo
+    cd pw-mcp-demo
+    npm init playwright@latest
+When prompted, choose TypeScript. Accept defaults for the rest.
+
+Step 2 — Initialize the agents
+Terminal
+    npx playwright init-agents --loop=vscode
+
+You should see output like:
+-------------------------------
+    Using project "chromium" as a primary project
+    specs/README.md - directory for test plans
+    tests/seed.spec.ts - default environment seed file
+    .github/agents/playwright-test-generator.agent.md - agent definition
+    .github/agents/playwright-test-healer.agent.md - agent definition
+    .github/agents/playwright-test-planner.agent.md - agent definition
+    .vscode/mcp.json - mcp configuration
+    .github/workflows/copilot-setup-steps.yml - GitHub Copilot setup steps
+    Done.
+
+This creates:
+--------------
+    Three .agent.md files — the definitions for each agent
+    A seed spec — the baseline test agents run before starting
+    An MCP configuration file
+    A GitHub Copilot workflow (for cloud coding agent — optional)
+
+
+Step 3 — Start the MCP server in VS Code
+--------------------------------------------
+    Open Command Palette: Cmd + Shift + P (Mac) or Ctrl + Shift + P (Windows/Linux)
+    Type: MCP: List Servers
+    Find playwright-test in the list (if you used Method A, look for playwright instead)
+    Click Start
+First launch takes 20–30 seconds while Playwright initializes.
+
+Step 4 — Verify the setup
+---------------------------
+Open Copilot Chat: Cmd + Ctrl + I (Mac) or Ctrl + Alt + I (Windows)
+In the chat mode dropdown at the bottom, you should see three new modes:
+    playwright-test-planner
+    playwright-test-generator
+    playwright-test-healer
+If they do not appear, reload the window: Cmd + Shift + P → Developer: Reload Window.
+
+Note:
+------
+The three chat modes only appear when you use Method B. Method A installs the MCP server but not the agent definitions.

@@ -1,0 +1,153 @@
+In Playwright, assertions are mainly provided through the expect() function. 
+Here are the important types you should know for automation testing and interviews.
+
+1. Visibility Assertions
+-------------------------------
+    await expect(page.getByText('Welcome')).toBeVisible();
+    await expect(page.getByText('Loading')).toBeHidden();
+
+2. Element State Assertions
+-----------------------------
+    await expect(locator).toBeEnabled();
+    await expect(locator).toBeDisabled();
+
+    await expect(locator).toBeEditable();
+
+    await expect(locator).toBeChecked();
+
+    await expect(locator).toBeFocused();
+
+3. Text Assertions
+--------------------
+    await expect(locator).toHaveText('Welcome');
+
+    await expect(locator).toContainText('Welcome');
+
+Difference:
+------------
+    toHaveText() → checks the expected text more strictly
+    toContainText() → checks whether the expected text is contained within the actual text
+
+4. Attribute Assertions
+-------------------------
+    await expect(locator).toHaveAttribute('type', 'email');
+    await expect(locator).toHaveClass('active');
+    await expect(locator).toHaveId('username');
+
+5. Input Value Assertions
+--------------------------
+    await expect(locator).toHaveValue('John');
+    await expect(locator).toHaveValues(['Java', 'Python']);
+
+6. Count Assertion
+--------------------
+    const products = page.locator('.product');
+    await expect(products).toHaveCount(5);
+
+7. Page Assertions
+--------------------
+    await expect(page).toHaveTitle('Dashboard');
+    await expect(page).toHaveURL(/dashboard/);
+
+8. Screenshot Assertion
+-------------------------
+Used for visual testing:
+    await expect(page).toHaveScreenshot();
+
+9. Generic Value Assertions
+-----------------------------
+These are useful for JavaScript values rather than UI locators:
+    expect(actual).toBe(expected);
+    expect(actual).toEqual(expected);
+    expect(value).toBeTruthy();
+    expect(value).toBeFalsy();
+    expect(value).toBeNull();
+    expect(value).toBeDefined();
+    expect(value).toContain('text');
+
+10. Negative Assertions
+--------------------------
+Add .not to verify that something is not true:
+    await expect(locator).not.toBeVisible();
+    await expect(locator).not.toHaveText('Error');
+    expect(value).not.toBeNull();
+
+11. Soft Assertions
+--------------------
+Normal assertion failure stops the current test:
+    await expect(locator).toBeVisible();
+
+Soft assertion records the failure and allows the test to continue:
+    await expect.soft(locator).toBeVisible();
+    await expect.soft(locator).toHaveText('Welcome');
+
+Quick interview summary : 
+---------------------------
+You can classify Playwright assertions into 
+    Locator Assertions, 
+    Page Assertions, 
+    Generic Assertions, 
+    Visual Assertions, 
+    Negative Assertions,
+    Soft Assertions.
+
+The biggest advantage of Playwright's web-first assertions, such as toBeVisible() and toHaveText(), 
+is that they automatically retry until the condition passes or the assertion times out, which helps reduce flaky tests.
+
+
+The additional important assertions include:
+----------------------------------------------
+
+| Assertion                        | Purpose                                          |
+| -------------------------------- | ------------------------------------------------ |
+| `toBeAttached()`                 | Element is attached to the DOM                   |
+| `toBeEmpty()`                    | Element/input is empty                           |
+| `toBeInViewport()`               | Element is inside the viewport                   |
+| `toHaveAccessibleName()`         | Checks accessible name                           |
+| `toHaveAccessibleDescription()`  | Checks accessible description                    |
+| `toHaveAccessibleErrorMessage()` | Checks accessible error message                  |
+| `toHaveCSS()`                    | Checks a CSS property                            |
+| `toHaveJSProperty()`             | Checks a JavaScript property                     |
+| `toHaveRole()`                   | Checks ARIA role                                 |
+| `toMatchAriaSnapshot()`          | Checks accessibility tree snapshot               |
+| `toHaveScreenshot()`             | Visual comparison of page/locator                |
+| `toPass()`                       | Retries a block until assertions pass            |
+| `expect.poll()`                  | Repeatedly checks a value until condition passes |
+| `toBeOK()`                       | Checks that an API response is successful        |
+
+
+There are also many generic assertions, such as:
+-----------------------------------------------------
+    expect(value).toBeGreaterThan(10);
+    expect(value).toBeLessThan(100);
+    expect(value).toBeGreaterThanOrEqual(10);
+    expect(value).toBeLessThanOrEqual(100);
+
+    expect(array).toContain('Playwright');
+
+    expect(object).toHaveProperty('name');
+
+    expect(text).toMatch(/success/);
+
+    expect(() => functionCall()).toThrow();
+
+For API testing:
+------------------
+    const response = await request.get('/users');
+
+    expect(response).toBeOK();
+    expect(response.status()).toBe(200);
+
+So, for teaching Playwright, I would organize the complete assertion topic into these categories:
+
+Locator assertions —         toBeVisible(), toBeEnabled(), toHaveText(), etc.
+Page assertions —            toHaveURL(), toHaveTitle()
+API assertions —             toBeOK() and generic checks on response data/status
+Generic assertions —         toBe(), toEqual(), toContain(), toMatch(), etc.
+Visual assertions —          toHaveScreenshot(), toMatchSnapshot()
+Accessibility assertions —   toHaveAccessibleName(), toHaveRole(), etc.
+Negating assertions —        expect(...).not
+Soft assertions —            expect.soft()
+Retrying assertions —        expect.poll() and expect(...).toPass()
+
+For an interview or Playwright training course, your original list plus these categories gives very good coverage.

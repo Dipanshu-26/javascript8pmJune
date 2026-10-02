@@ -1,0 +1,30 @@
+15 Final thoughts
+------------------ 
+AI agents are powerful. They can dramatically speed up test authoring and maintenance. 
+But they are not a substitute for engineering fundamentals.
+
+Here is what the practice actually looks like:
+Without fundamentals ==>
+AI generates plausible-looking tests. You accept them. Coverage grows but quality drops silently. 
+Your suite starts catching fewer real bugs. You do not notice until something ships broken.
+
+With fundamentals ==>
+AI generates the first draft. You review it critically. You reject weak locators, weak assertions, 
+and silent skips. Coverage grows AND quality holds. AI becomes leverage.
+
+The AI does not replace the engineer. The AI amplifies whatever the engineer already is. 
+If the engineer is strong at fundamentals, the AI makes them stronger. 
+If the engineer is weak at fundamentals, the AI ships weakness faster.
+
+Three habits worth building : 
+-----------------------------
+- Read every diff. Every line of AI-generated code deserves the same review as human-written code.
+- Distrust green builds from Healers. A test that suddenly passes after a Healer session is a suspect until proven otherwise.
+- Codify your team rules once. Put them in AGENTS.md and the agent files. The AI will follow them. What you skip codifying, the AI will do its own way.
+
+The role of a test engineer is not changing to "prompt writer." 
+The role is changing to reviewer, guardrail, and architect. 
+Those skills come from fundamentals, not from AI.
+
+Use AI.
+Review harder than you write.

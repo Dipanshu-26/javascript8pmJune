@@ -1,0 +1,17 @@
+2. What is Playwright MCP
+--------------------------
+Playwright MCP is Microsoft's official MCP server that wraps Playwright's browser automation as tools an AI can call.
+
+When connected to Playwright MCP, an AI agent can:
+    - Open URLs
+    - Click buttons, fill forms, hover elements
+    - Read the DOM through accessibility snapshots
+    - Take screenshots
+    - Watch network traffic and console messages
+    - Run tests in a real browser
+
+The key difference from screenshot-based AI browsers: 
+    - Playwright MCP reads the accessibility tree instead of pixels. 
+    - This is the same tree a screen reader uses. 
+    - It is faster, cheaper, and more deterministic — 
+    - and it is exactly why getByRole is the recommended locator strategy in Playwright.

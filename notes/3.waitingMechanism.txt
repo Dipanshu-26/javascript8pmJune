@@ -1,0 +1,139 @@
+In Playwright, the default timeout for actions that use auto-waiting is 30 seconds in Playwright Test.
+
+For example:
+    await page.getByRole('button', { name: 'Login' }).click();
+
+Playwright can wait up to 30 seconds for the button to satisfy the required actionability checks. 
+If it becomes ready after 2 seconds, Playwright acts immediately—it does not wait the full 30 seconds.
+
+You can change the action timeout:
+For a specific action
+    await page.getByRole('button', { name: 'Login' }).click({
+    timeout: 10000
+    });
+
+Or configure it:
+playwright.config.js
+    export default defineConfig({
+    use: {
+        actionTimeout: 10000
+    }
+    });    
+
+Important distinction: Playwright Test's overall test timeout defaults to 30 seconds, 
+while web-first expect() assertions default to 5 seconds. 
+Action timeout configuration can differ depending on how you've configured Playwright.    
+-------------------------------------------------------------------------------------------------------------
+
+In Playwright, waiting mechanisms help synchronize your test with the application. 
+
+Playwright has strong auto-waiting, so in most cases you should avoid fixed waits like waitForTimeout().
+
+Main waiting mechanisms in Playwright:
+---------------------------------------------------------------------------------------------------------------------------------
+| Waiting Mechanism         | Example                                     | Purpose                                             |
+| ------------------------- | ------------------------------------------- | --------------------------------------------------- |
+| Auto-waiting              | `locator.click()`                           | Automatically waits until the element is actionable |
+| Web-first assertions      | `expect(locator).toBeVisible()`             | Retries assertion until it passes or times out      |
+| `locator.waitFor()`       | `locator.waitFor({ state: 'visible' })`     | Waits for an element state                          |
+| `page.waitForURL()`       | `page.waitForURL('**/dashboard')`           | Waits for URL/navigation                            |
+| `page.waitForLoadState()` | `page.waitForLoadState('domcontentloaded')` | Waits for page load state                           |
+| `page.waitForResponse()`  | `page.waitForResponse(...)`                 | Waits for a specific network response               |
+| `page.waitForRequest()`   | `page.waitForRequest(...)`                  | Waits for a specific network request                |
+| `page.waitForEvent()`     | `page.waitForEvent('popup')`                | Waits for browser/page events                       |
+| `page.waitForFunction()`  | `page.waitForFunction(...)`                 | Waits for a JavaScript condition                    |
+| `page.waitForTimeout()`   | `page.waitForTimeout(3000)`                 | Fixed/hard wait; generally discouraged              |
+
+
+1. Auto-Waiting — Recommended
+------------------------------
+Playwright automatically waits before performing actions.
+    await page.getByRole('button', { name: 'Login' }).click();
+
+Before clicking, Playwright checks conditions such as whether the element is:
+    Attached/resolved
+    Visible
+    Stable
+    Receiving events
+    Enabled
+You normally do not need to add an explicit wait before click().
+
+2. Web-First Assertions — Recommended
+-------------------------------------------
+    await expect(page.getByText('Login successful')).toBeVisible();
+Playwright automatically retries the assertion until it passes or reaches the timeout.
+
+3. locator.waitFor()
+---------------------
+Wait for a specific element state:
+    const message = page.getByText('Welcome');
+    await message.waitFor({ state: 'visible' });
+Available states include:
+    'visible'
+    'hidden'
+    'attached'
+    'detached'
+
+4. waitForURL()
+--------------------
+Useful when an action causes navigation:
+    await page.getByRole('button', { name: 'Login' }).click();
+    await page.waitForURL('**/dashboard');
+Often, a web-first assertion is also a good choice:
+    await expect(page).toHaveURL(/dashboard/);
+
+5. waitForLoadState()
+----------------------
+    await page.waitForLoadState('domcontentloaded');
+Common states:
+    load
+    domcontentloaded
+    networkidle
+networkidle is generally discouraged as a way to decide whether an application is "ready"; prefer waiting for a specific UI state instead.
+
+6. Wait for API Response
+--------------------------
+Very useful when clicking a button triggers an API call:
+    const responsePromise = page.waitForResponse(
+    response => response.url().includes('/api/users')
+    );
+
+    await page.getByRole('button', { name: 'Load Users' }).click();
+
+    const response = await responsePromise;
+Notice that the wait is registered before the action to avoid missing a fast response.
+
+7. Wait for Request
+-----------------------
+    const requestPromise = page.waitForRequest(
+    request => request.url().includes('/api/login')
+    );
+
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    const request = await requestPromise;
+
+8. Wait for Events
+---------------------
+For example, wait for a new tab or popup:
+    const popupPromise = page.waitForEvent('popup');
+    await page.getByText('Open New Window').click();
+    const newPage = await popupPromise;
+
+9. waitForFunction()
+-------------------------
+Wait for a custom JavaScript condition:
+    await page.waitForFunction(() => {
+    return document.title === 'Dashboard';
+    });
+
+10. Hard Wait — Avoid When Possible
+---------------------------------------
+    await page.waitForTimeout(5000);
+This always waits 5 seconds, even if the application becomes ready after 1 second. It can make tests slow and flaky.
+
+Best practice Prefer this order:
+Auto-waiting → Web-first assertions → Locator waits → URL/event/network-specific waits → waitForFunction() → Hard waits only for debugging
+
+A key Playwright interview point is: Playwright's auto-waiting is actionability-based, while web-first assertions use automatic retrying. 
+They are related but not exactly the same mechanism.

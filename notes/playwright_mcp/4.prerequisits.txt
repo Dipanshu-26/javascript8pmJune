@@ -1,0 +1,14 @@
+4. Prerequisites
+----------------
+Before starting, confirm the following:
+    Node.js 18+ — run node --version
+    VS Code 1.105 or later — agents need this version
+    GitHub Copilot signed in with an active model
+    Playwright 1.56 or later — run npx playwright --version
+
+
+Do not skip:
+If any of these are outdated, update them first. 
+Skipping this step causes hours of debugging later 
+— most agent setup failures trace back to a version mismatch here.
+

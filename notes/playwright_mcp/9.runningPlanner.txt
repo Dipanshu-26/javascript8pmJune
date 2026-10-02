@@ -1,0 +1,40 @@
+9. Running the Planner
+-----------------------------------
+The Planner explores an application and produces a numbered test plan.
+    - Open Copilot Chat: Cmd + Ctrl + I
+    - Select mode: playwright-test-planner from the chat mode dropdown
+    - Confirm the model is set to claude-haiku-4-5 or another available model
+    - Type the prompt below
+
+prompt   Copilot Chat — Planner mode
+---------------------------------------------
+Explore https://www.saucedemo.com.
+
+Cover the login flow with these scenarios:
+    - standard_user (successful login)
+    - locked_out_user (shows locked error)
+    - Empty username submission
+    - Empty password submission
+    - Invalid credentials
+
+All passwords are: secret_sauce
+
+Save the plan to specs/saucedemo-login.md
+
+The Planner will:
+-------------------
+    1. Open a Chromium browser window
+    2. Navigate to SauceDemo
+    3. Take accessibility snapshots
+    4. Test each scenario in the live app
+    5. Write a numbered Markdown plan to specs/saucedemo-login.md
+
+What to verify in the plan:
+    1. Scenarios are numbered (1.1, 1.2, 2.1, etc.)
+    2. Each scenario has clear preconditions
+    3. Steps include expected results
+    4. Assertions are specific and meaningful, not just "page loaded"
+    5. Tags are applied (@smoke, @regression, @critical)
+
+If any scenario is unclear or wrong, edit the plan file by hand before continuing. 
+The plan is the source of truth — fixing it here is cheaper than fixing generated code later.

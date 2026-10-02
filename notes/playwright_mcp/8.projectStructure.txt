@@ -1,0 +1,68 @@
+8. Setting up a minimal project structure
+-------------------------------------------
+The agents work best when your project has a predictable structure. 
+Create these folders:
+
+Terminal:
+    mkdir -p src/pages src/fixtures src/utils tests/data specs
+    Create src/fixtures/base.ts
+
+This is the custom fixture that every test will import from.
+
+typescript    src/fixtures/base.ts
+
+    import { test as base, expect } from '@playwright/test';
+    export const test = base.extend<{}>({});
+    export { expect };
+
+Create    src/pages/BasePage.ts
+The base class that all page objects extend.
+
+typescript     src/pages/BasePage.ts
+
+    import { Page } from '@playwright/test';
+
+    export abstract class BasePage {
+    protected readonly page: Page;
+
+    constructor(page: Page) {
+        this.page = page;
+    }
+
+    abstract goto(): Promise<void>;
+
+    async waitForReady(): Promise<void> {
+        await this.page.waitForLoadState('domcontentloaded');
+    }
+    }
+
+
+Update tests/seed.spec.ts 
+Replace the auto-generated seed with a real baseline test that agents can reference:
+
+typescript   tests/seed.spec.ts
+
+import { test, expect } from '../src/fixtures/base';
+
+    test.describe('Seed — environment baseline @smoke', () => {
+    test('SauceDemo login page loads', async ({ page }) => {
+        await page.goto('https://www.saucedemo.com');
+        await expect(page.getByRole('textbox', { name: 'Username' })).toBeVisible();
+        await expect(page.getByRole('textbox', { name: 'Password' })).toBeVisible();
+    });
+    });
+
+Create tests/data/users.json
+json    tests/data/users.json
+
+    {
+    "standard": { "username": "standard_user", "password": "secret_sauce" },
+    "locked": { "username": "locked_out_user", "password": "secret_sauce" }
+    }
+
+Verify the setup
+Run the seed test to confirm everything is wired correctly:
+
+Terminal : 
+    npx playwright test tests/seed.spec.ts
+You should see 1 test passing. If not, fix the setup before moving on.

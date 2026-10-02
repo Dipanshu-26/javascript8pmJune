@@ -1,0 +1,43 @@
+3. The three agents
+-------------------------
+Starting from Playwright v1.56 (October 2025), Playwright ships three built-in AI agents. 
+Each is a Markdown file that instructs the AI how to behave for a specific role.
+
+Role 01
+--------
+Planner
+------------
+Explores the app in a real browser and writes a plain-English test plan. Never touches code.
+
+Input        A URL and an instruction like "cover the checkout flow"
+Output       A numbered Markdown test plan in specs/*.md
+Constraint   Read-only browser. No destructive clicks. Writes only to specs/.
+
+Role 02
+--------
+Generator
+----------
+Turns a plan scenario into runnable Playwright TypeScript that follows your framework conventions.
+
+Input       A plan file and a scenario number
+Output      A Playwright .spec.ts file that runs and passes
+Constraint  Verifies locators in a live browser before writing them. Asks before creating new page objects.
+
+Role 03
+--------
+Healer
+-------
+Diagnoses failing tests and fixes them — without weakening assertions or hiding real bugs.
+
+Input        A failing test file
+Output       A minimum-viable fix + a mandatory report explaining what was done
+Constraint   Preserves assertion intent. Never softens tests. Never skips silently. Stops after 2 failed attempts.
+
+You can run them individually or chain them: Planner → Generator → Healer.
+
+
+
+
+5. Installation
+-----------------
+Playwright MCP can be installed in two different ways depending on what you want to do. Pick the one that matches your goal.    

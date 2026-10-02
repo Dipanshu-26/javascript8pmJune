@@ -1,0 +1,17 @@
+Playwright MCP & AI Agents
+------------------------------------
+
+A step-by-step, copy-paste-ready guide to installing and using Playwright MCP with the built-in AI agents — Planner, Generator, and Healer — in VS Code.
+
+
+1. What is MCP
+---------------
+MCP stands for Model Context Protocol. It is an open protocol released by Anthropic in November 2024.
+
+Think of MCP as a USB-C port for AI models. Before MCP, every AI tool needed a custom integration to connect with external tools like browsers, databases, or file systems. MCP standardizes this — any MCP-compatible AI client can talk to any MCP server.
+
+Two key pieces:
+---------------
+    - MCP Client — the AI-side application (VS Code with Copilot, Cursor, Claude Code, etc.)
+    - MCP Server — a process that exposes tools (browser control, file access, database queries)
+You type a prompt in the client. The client asks the AI which tools it needs. The AI calls the tools through the server. The server executes and returns results.

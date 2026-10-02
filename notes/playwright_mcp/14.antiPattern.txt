@@ -1,0 +1,50 @@
+14 Anti-patterns to avoid
+-------------------------
+Prompt without context  ==> 
+✗ Don't
+    "Fix this test"
+
+✓ Do
+    "Test X:42 fails with error Y. Diagnose and fix. Do not change assertion intent."
+
+Multiple asks in one prompt ==>
+✗ Don't
+    "Generate this test and refactor the page object and add data-driven cases"
+
+✓ Do
+    Three separate prompts.
+
+Referencing scenarios by name instead of number ==>
+✗ Don't
+    "Generate the login scenario" (which one? there may be four)
+✓ Do
+    "Generate scenario 1.1 from specs/auth.md"
+
+Pointing agents at production ==>
+✗ Don't
+    "Explore https://myapp.com/checkout" (production URL)
+
+✓ Do
+    "Explore https://staging.myapp.com/checkout"
+
+Credentials in prompts ==>
+✗ Don't
+    "Log in as admin@company.com / password123"
+
+✓ Do
+    "Log in using credentials from tests/data/users.json"
+
+No verification step ==>
+✗ Don't
+    Ask agent to generate, assume it works.
+
+✓ Do
+    Ask agent to generate AND run AND show the pass output.
+
+Trusting the Healer blindly ==> 
+Never merge a Healer fix without reading the diff. 
+The Healer's most common failure mode is silent test weakening.
+
+Skipping the seed test ==>
+The seed test is the baseline every agent uses. 
+If it is empty or wrong, everything downstream is wrong.
